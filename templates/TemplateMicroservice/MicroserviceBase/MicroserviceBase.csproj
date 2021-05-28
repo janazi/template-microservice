@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>39d2bac8-cae8-46a0-be0d-b4c6287a9b13</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<Version>1.0.0-dev0001</Version>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration) == 'Debug'">
+		<BumpLabel>dev</BumpLabel>
+		<BumpLabelDigits>4</BumpLabelDigits>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration) == 'Release'">
+		<BumpRevision>True</BumpRevision>
+		<BumpResetLabel>dev</BumpResetLabel>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Ivy.Versioning" Version="3.1.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+		<PackageReference Include="RequestHeaderCorrelationIdMiddleware" Version="1.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+	</ItemGroup>
+
+</Project>
