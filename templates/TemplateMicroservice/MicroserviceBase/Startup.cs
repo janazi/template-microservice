@@ -1,4 +1,5 @@
 using CorrelationIdRequestHeader;
+using MicroserviceBase.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,7 @@ namespace MicroserviceBase
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.ConfigureMasstransit();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

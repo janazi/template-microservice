@@ -5,7 +5,7 @@
 		<UserSecretsId>39d2bac8-cae8-46a0-be0d-b4c6287a9b13</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<Version>1.0.0.1-dev0008</Version>
+		<Version>1.0.0.1-dev0007</Version>
 	</PropertyGroup>
 	<PropertyGroup Condition="$(Configuration) == 'Debug'">
 		<BumpLabel>dev</BumpLabel>
@@ -25,10 +25,6 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
 		<PackageReference Include="RequestHeaderCorrelationIdMiddleware" Version="1.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\MicroserviceBase.Infrastructure.Messaging\MicroserviceBase.Infrastructure.Messaging.csproj" />
 	</ItemGroup>
 
 </Project>

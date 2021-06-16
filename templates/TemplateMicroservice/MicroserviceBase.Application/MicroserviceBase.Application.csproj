@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DomainValidationCore" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MicroserviceBase.Domain\MicroserviceBase.Domain.csproj" />
+    <ProjectReference Include="..\MicroserviceBase.Infrastructure\MicroserviceBase.Infrastructure.CrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>
