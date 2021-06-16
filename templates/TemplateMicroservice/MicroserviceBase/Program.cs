@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
-using System.Net;
 
 namespace MicroserviceBase
 {
@@ -19,10 +17,6 @@ namespace MicroserviceBase
                     webBuilder.ConfigureKestrel(opt =>
                     {
                         opt.AddServerHeader = false;
-                        opt.Listen(IPAddress.Loopback, 5096, cfg =>
-                        {
-                            cfg.Protocols = HttpProtocols.Http1AndHttp2;
-                        });
                     });
 
                     webBuilder.UseStartup<Startup>();

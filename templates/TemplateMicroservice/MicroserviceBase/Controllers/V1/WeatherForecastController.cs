@@ -20,6 +20,7 @@ namespace MicroserviceBase.Controllers.V1
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public IActionResult Get()
         {
+            _logger.LogInformation(Request.Headers["x-correlation-id"]);
             return Ok();
         }
     }
