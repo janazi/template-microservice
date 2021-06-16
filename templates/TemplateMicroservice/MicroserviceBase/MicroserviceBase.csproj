@@ -5,7 +5,8 @@
 		<UserSecretsId>39d2bac8-cae8-46a0-be0d-b4c6287a9b13</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<Version>1.0.0-dev0001</Version>
+		<Version>1.0.0.1</Version>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	</PropertyGroup>
 	<PropertyGroup Condition="$(Configuration) == 'Debug'">
 		<BumpLabel>dev</BumpLabel>
@@ -17,13 +18,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Flunt" Version="2.0.3" />
 		<PackageReference Include="Ivy.Versioning" Version="3.1.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Masstransit.CorrelationIdMiddleware" Version="1.0.0.1" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
-		<PackageReference Include="RequestHeaderCorrelationIdMiddleware" Version="1.0.0" />
+		<PackageReference Include="RequestHeaderCorrelationIdMiddleware" Version="1.0.3.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\MicroserviceBase.Application\MicroserviceBase.Application.csproj" />
 	</ItemGroup>
 
 </Project>
