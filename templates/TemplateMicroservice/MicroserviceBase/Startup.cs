@@ -1,4 +1,6 @@
 using CorrelationIdRequestHeader;
+using MassTransit;
+using MicroserviceBase.Application.Consumers;
 using MicroserviceBase.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +24,10 @@ namespace MicroserviceBase
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddMediator(cfg =>
+            {
+                cfg.AddConsumer<CustomerCreatedConsumer>();
+            });
             services.ConfigureMasstransit();
             services.AddControllers();
             services.AddSwaggerGen(c =>

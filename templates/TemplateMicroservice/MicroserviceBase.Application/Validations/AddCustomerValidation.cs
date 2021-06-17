@@ -1,8 +1,8 @@
 ﻿using DomainValidationCore.Validation;
+using MicroserviceBase.Application.Specifications;
 using MicroserviceBase.Domain.Commands;
-using NeonModelo.Api.Specifications.Customers;
 
-namespace NeonModelo.Api.UseCases.Customers
+namespace MicroserviceBase.Application.Validations
 {
     public class AddCustomerValidation : Validator<AddCustomerCommand>
     {

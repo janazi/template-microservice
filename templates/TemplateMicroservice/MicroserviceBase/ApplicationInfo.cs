@@ -1,9 +1,8 @@
-﻿using MicroserviceBase;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
-namespace NeonModelo.Api
+namespace MicroserviceBase
 {
     public static class ApplicationInfo
     {

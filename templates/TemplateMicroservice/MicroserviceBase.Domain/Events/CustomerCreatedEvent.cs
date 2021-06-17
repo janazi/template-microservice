@@ -1,6 +1,6 @@
 ﻿namespace MicroserviceBase.Domain.Events
 {
-    public class TestEvent
+    public class CustomerCreatedEvent
     {
         public string Description { get; set; }
     }

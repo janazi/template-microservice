@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MicroserviceBase.Infrastructure.Messaging
 {
-    public class MessageConsumer : IConsumer<TestEvent>
+    public class MessageConsumer : IConsumer<CustomerCreatedEvent>
     {
         private readonly ILogger<MessageConsumer> _logger;
 
@@ -13,7 +13,7 @@ namespace MicroserviceBase.Infrastructure.Messaging
         {
             _logger = logger;
         }
-        public async Task Consume(ConsumeContext<TestEvent> context)
+        public async Task Consume(ConsumeContext<CustomerCreatedEvent> context)
         {
             _logger.LogInformation($"Message Consumed: {context.Message.Description}");
             await Task.CompletedTask;

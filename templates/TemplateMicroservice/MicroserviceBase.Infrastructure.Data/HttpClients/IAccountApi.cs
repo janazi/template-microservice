@@ -1,11 +1,11 @@
-﻿using MicroserviceBase.Domain.Commands;
+﻿using System;
+using System.Threading.Tasks;
+using MicroserviceBase.Domain.Commands;
 using MicroserviceBase.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
-using System;
-using System.Threading.Tasks;
 
-namespace NeonModelo.Api.ApiConsumers
+namespace MicroserviceBase.Infrastructure.Data.HttpClients
 {
     public interface ICustomerApi
     {

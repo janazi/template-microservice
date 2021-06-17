@@ -1,8 +1,8 @@
-﻿using DomainValidationCore.Interfaces.Specification;
+﻿using System;
+using DomainValidationCore.Interfaces.Specification;
 using MicroserviceBase.Domain.Commands;
-using System;
 
-namespace NeonModelo.Api.Specifications.Customers
+namespace MicroserviceBase.Application.Specifications
 {
     public class CustomerTemIdadeCompativel : ISpecification<AddCustomerCommand>
     {
