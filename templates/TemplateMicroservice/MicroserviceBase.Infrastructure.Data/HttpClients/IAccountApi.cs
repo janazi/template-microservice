@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using MicroserviceBase.Domain.Commands;
+﻿using MicroserviceBase.Domain.Commands.Customers;
 using MicroserviceBase.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
+using System;
+using System.Threading.Tasks;
 
 namespace MicroserviceBase.Infrastructure.Data.HttpClients
 {

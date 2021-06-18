@@ -1,20 +1,35 @@
-﻿using MicroserviceBase.Domain.Policies;
+﻿using CorrelationIdRequestHeader;
+using MicroserviceBase.Domain.Policies;
 using MicroserviceBase.Infrastructure.Bootstrap.Extensions;
+using MicroserviceBase.Infrastructure.Messaging;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using Serilog;
+using System;
+using System.Collections.Generic;
 
 namespace MicroserviceBase.Infrastructure.Bootstrap
 {
     public class ApplicationStartup
     {
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, string applicationName)
         {
+            ConfigureLogging(configuration, applicationName);
             //services.AddMvc().AddJsonOptions(options =>
             //{
             //    options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
             //    options.JsonSerializerOptions.IgnoreNullValues = true;
             //});
-
+            services.ConfigureMasstransit();
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MicroserviceBase", Version = "v1" });
+            });
             services.AddApiVersion();
             services.AddCustomHealthChecks();
             services.AddSingleton<DatabasePolicies>();
@@ -71,13 +86,47 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             //ServiceLocator.SetLocatorProvider(services.BuildServiceProvider());
         }
 
-        //public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
-        //{
-        //    app.UseSuperSwagger(provider);
-        //    app.UseCustomHealthChecks();
-        //    app.UseResponseCompression();
-        //    app.UseRouting();
-        //    app.UseEndpoints(ep => ep.MapControllers());
-        //}
+        private static void ConfigureLogging(IConfiguration configuration, string applicationName)
+        {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .Enrich.WithMachineName()
+                .Enrich.WithProperty("Environment", environment)
+                .Enrich.WithProperty("AppllicationName", applicationName)
+                .WriteTo.Debug()
+                .WriteTo.Console(outputTemplate: "{Timestamp:HH:mm:ss:ms} [{Level}] {Properties}: {NewLine}{Message}{NewLine}{Exception}{NewLine}")
+                .Enrich.WithCorrelationIdHeader("x-correlation-id")
+                //.WriteTo.Elasticsearch(ConfigureElasticSink(context.Configuration, context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")))
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                foreach (var versionDescription in (IEnumerable<ApiVersionDescription>)provider.ApiVersionDescriptions)
+                {
+                    c.SwaggerEndpoint("./" + versionDescription.GroupName + "/swagger.json", versionDescription.GroupName.ToLowerInvariant());
+                    c.OAuthClientId(string.Empty);
+                    c.OAuthClientSecret(string.Empty);
+                }
+            });
+
+
+            app.AddRequestHeaderCorrelationId();
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(ep => ep.MapControllers());
+            app.UseResponseCompression();
+
+        }
     }
 }

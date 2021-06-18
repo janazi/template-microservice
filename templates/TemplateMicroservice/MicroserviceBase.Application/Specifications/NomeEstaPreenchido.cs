@@ -1,5 +1,5 @@
 ﻿using DomainValidationCore.Interfaces.Specification;
-using MicroserviceBase.Domain.Commands;
+using MicroserviceBase.Domain.Commands.Customers;
 
 namespace MicroserviceBase.Application.Specifications
 {

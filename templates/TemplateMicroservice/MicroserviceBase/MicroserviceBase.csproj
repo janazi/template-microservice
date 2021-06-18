@@ -30,6 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\MicroserviceBase.Infrastructure.Bootstrap\MicroserviceBase.Infrastructure.Bootstrap.csproj" />
 	  <ProjectReference Include="..\MicroserviceBase.Infrastructure.Messaging\MicroserviceBase.Infrastructure.Messaging.csproj" />
 	</ItemGroup>
 

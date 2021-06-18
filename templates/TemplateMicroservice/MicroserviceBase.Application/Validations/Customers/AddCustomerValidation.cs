@@ -1,8 +1,8 @@
 ﻿using DomainValidationCore.Validation;
 using MicroserviceBase.Application.Specifications;
-using MicroserviceBase.Domain.Commands;
+using MicroserviceBase.Domain.Commands.Customers;
 
-namespace MicroserviceBase.Application.Validations
+namespace MicroserviceBase.Application.Validations.Customers
 {
     public class AddCustomerValidation : Validator<AddCustomerCommand>
     {

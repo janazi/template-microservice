@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MicroserviceBase.Domain.Commands
+namespace MicroserviceBase.Domain.Commands.Customers
 {
     public class AddCustomerCommand
     {
