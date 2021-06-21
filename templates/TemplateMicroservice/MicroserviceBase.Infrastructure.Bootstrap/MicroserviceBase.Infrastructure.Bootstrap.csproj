@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Jaeger" Version="1.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
@@ -26,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MicroserviceBase.Domain\MicroserviceBase.Domain.csproj" />
     <ProjectReference Include="..\MicroserviceBase.Infrastructure.Messaging\MicroserviceBase.Infrastructure.Messaging.csproj" />
+    <ProjectReference Include="..\MicroserviceBase.Infrastructure\MicroserviceBase.Infrastructure.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>

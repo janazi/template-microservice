@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using MicroserviceBase.Domain.Commands;
+using MicroserviceBase.Domain.Commands.Customers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

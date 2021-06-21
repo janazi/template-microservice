@@ -1,6 +1,6 @@
 ﻿using MassTransit;
-using MassTransit.Mediator;
-using MicroserviceBase.Domain.Commands;
+using MediatR;
+using MicroserviceBase.Domain.Commands.Customers;
 using MicroserviceBase.Domain.Events;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

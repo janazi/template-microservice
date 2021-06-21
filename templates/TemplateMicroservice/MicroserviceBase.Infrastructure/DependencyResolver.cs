@@ -5,10 +5,13 @@ namespace MicroserviceBase.Infrastructure.CrossCutting
 {
     public static class DependencyResolver
     {
-        private static IServiceProvider Instance { get; set; }
+        internal static IServiceProvider Instance { get; private set; }
 
         public static void SetServiceCollection(IServiceProvider services)
         {
+            if (Instance is not null)
+                return;
+
             Instance = services;
         }
 

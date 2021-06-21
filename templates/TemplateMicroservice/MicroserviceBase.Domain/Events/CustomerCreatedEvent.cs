@@ -1,6 +1,8 @@
-﻿namespace MicroserviceBase.Domain.Events
+﻿using MediatR;
+
+namespace MicroserviceBase.Domain.Events
 {
-    public class CustomerCreatedEvent
+    public class CustomerCreatedEvent : INotification
     {
         public string Description { get; set; }
     }
