@@ -18,7 +18,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
 {
     public class ApplicationStartup
     {
-        public static void ConfigureServices(IServiceCollection services, IConfiguration configuration, string applicationName)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, string applicationName)
         {
             ConfigureLogging(configuration, applicationName);
             services.AddMvc().AddJsonOptions(options =>
@@ -35,7 +35,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             services.AddApiVersion();
             services.AddCustomHealthChecks();
             services.AddSingleton<DatabasePolicies>();
-            services.AddMediatR(typeof(ApplicationStartup));
+            services.AddMediatR(AppDomain.CurrentDomain.Load("MicroserviceBase.Application"));
             //services.AddOpenTracing();
             //services.AddJaegerHttpTracer(configuration);
             //services.AddMassTransitOpenTracing();
@@ -68,7 +68,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
                 .CreateLogger();
         }
 
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>

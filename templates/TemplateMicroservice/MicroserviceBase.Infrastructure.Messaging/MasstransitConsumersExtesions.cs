@@ -20,8 +20,8 @@ namespace MicroserviceBase.Infrastructure.Messaging
 
             services.AddMassTransitHostedService(true);
 
-            EndpointConvention.Map<AddCustomerCommand>(
-                EndpointAdressProvider.GetEndPointAdress<AddCustomerCommand>());
+            EndpointConvention.Map<CreateCustomerCommand>(
+                EndpointAdressProvider.GetEndPointAdress<CreateCustomerCommand>());
         }
 
         public class EndpointAdressProvider

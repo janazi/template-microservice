@@ -5,9 +5,9 @@ using MicroserviceBase.Infrastructure.CrossCutting;
 
 namespace MicroserviceBase.Application.Specifications
 {
-    public class CpfDeveSerUnicoNaBase : ISpecification<AddCustomerCommand>
+    public class CpfDeveSerUnicoNaBase : ISpecification<CreateCustomerCommand>
     {
-        public bool IsSatisfiedBy(AddCustomerCommand c)
+        public bool IsSatisfiedBy(CreateCustomerCommand c)
         {
             var customerQuery = DependencyResolver.GetService<ICustomerQuery>();
             var existingCustomer = customerQuery.GetByCPF(c.CPF);

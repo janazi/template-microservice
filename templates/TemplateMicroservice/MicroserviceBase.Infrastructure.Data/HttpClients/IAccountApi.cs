@@ -13,7 +13,7 @@ namespace MicroserviceBase.Infrastructure.Data.HttpClients
         Task<Customer> GetCustomer();
 
         [Post("/v1/customer")]
-        Task<Customer> Create(AddCustomerCommand command);
+        Task<Customer> Create(CreateCustomerCommand command);
     }
 
     public static class AccountApiExtension

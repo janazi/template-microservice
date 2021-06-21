@@ -4,9 +4,9 @@ using System;
 
 namespace MicroserviceBase.Application.Specifications
 {
-    public class CustomerTemIdadeCompativel : ISpecification<AddCustomerCommand>
+    public class CustomerTemIdadeCompativel : ISpecification<CreateCustomerCommand>
     {
-        public bool IsSatisfiedBy(AddCustomerCommand command)
+        public bool IsSatisfiedBy(CreateCustomerCommand command)
         {
             var dataNascimentoMaiorDeIdade = DateTime.Now.AddYears(-18);
             return command.DataNascimento < dataNascimentoMaiorDeIdade;

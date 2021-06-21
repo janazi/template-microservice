@@ -33,7 +33,7 @@ namespace MicroserviceBase.Controllers.V1
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] AddCustomerCommand addCustomerCommand)
+        public IActionResult Add([FromBody] CreateCustomerCommand CreateCustomerCommand)
         {
             return Ok();
         }

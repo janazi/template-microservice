@@ -34,8 +34,8 @@ namespace MicroserviceBase.Controllers.V1
         {
             _logger.LogInformation(Request.Headers["x-correlation-id"]);
             await _publishEndpoint.Publish(new CustomerCreatedEvent() { Description = "sample event" });
-            await _sendEndpoint.Send(new AddCustomerCommand() { Nome = "sample command" });
-            await _mediator.Publish((new CustomerCreatedEvent() { Description = "mediator sample" }));
+            await _sendEndpoint.Send(new CreateCustomerCommand() { Nome = "sample command" });
+            await _mediator.Send(new CreateCustomerCommand() { Nome = "mediator sample", CPF = "111.111.111-11", DataNascimento = new System.DateTime(2000, 1, 1) });
             return Ok();
         }
     }
