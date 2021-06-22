@@ -1,8 +1,10 @@
-﻿using MicroserviceBase.Domain.Commands.Customers;
+﻿using MediatR;
+using MicroserviceBase.Domain.Commands.Customers;
 using MicroserviceBase.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace MicroserviceBase.Controllers.V1
 {
@@ -14,9 +16,11 @@ namespace MicroserviceBase.Controllers.V1
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public class CustomersController : ControllerBase
     {
-        public CustomersController()
-        {
+        private readonly IMediator _mediator;
 
+        public CustomersController(IMediator mediator)
+        {
+            _mediator = mediator;
         }
 
         [HttpPatch("{id}")]
@@ -33,9 +37,13 @@ namespace MicroserviceBase.Controllers.V1
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] CreateCustomerCommand CreateCustomerCommand)
+        public async Task<IActionResult> Post([FromBody] CreateCustomerCommand command)
         {
-            return Ok();
+            var result = await _mediator.Send(command);
+            if (result.IsValid is false)
+                return BadRequest(result);
+
+            return CreatedAtAction(nameof(Post), result);
         }
 
     }
