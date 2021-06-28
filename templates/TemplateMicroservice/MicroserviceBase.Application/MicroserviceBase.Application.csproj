@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="DomainValidationCore" Version="1.1.1" />
-    <PackageReference Include="MassTransit" Version="7.2.0" />
+    <PackageReference Include="MassTransit" Version="7.2.1" />
   </ItemGroup>
 
   <ItemGroup>
