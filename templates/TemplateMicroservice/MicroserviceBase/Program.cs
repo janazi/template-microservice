@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace MicroserviceBase
 {
@@ -20,6 +21,6 @@ namespace MicroserviceBase
                     });
 
                     webBuilder.UseStartup<Startup>();
-                });
+                }).UseSerilog();
     }
 }

@@ -24,6 +24,8 @@ namespace MicroserviceBase.Controllers.V1
         }
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
         public IActionResult Patch(Guid customerId, [FromBody] UpdateCustomerCommand command)
         {
             var customer = new Customer(command.Nome, command.DataNascimento, command.CPF);
@@ -33,18 +35,20 @@ namespace MicroserviceBase.Controllers.V1
 
             customer.Patch(command);
 
-            if (!customer.IsValid)
-                return BadRequest();
+            if (customer.IsValid is false)
+                return NoContent();
 
-            return new OkResult();
+            return new AcceptedResult("Patch", customer);
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Customer), StatusCodes.Status201Created)]
         public async Task<IActionResult> Post([FromBody] CreateCustomerCommand command)
         {
             var result = await _mediator.Send(command);
             if (result.IsValid is false)
-                return BadRequest(result);
+                return BadRequest(result.Notifications);
 
             return CreatedAtAction(nameof(Post), result);
         }

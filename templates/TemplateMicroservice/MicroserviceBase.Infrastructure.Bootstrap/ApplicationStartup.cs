@@ -1,5 +1,4 @@
-﻿using CorrelationIdRequestHeader;
-using MediatR;
+﻿using MediatR;
 using MicroserviceBase.Domain.Policies;
 using MicroserviceBase.Infrastructure.Bootstrap.Extensions;
 using MicroserviceBase.Infrastructure.CrossCutting;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using RequestHeaderCorrelationId;
 using Serilog;
 using System;
 using System.Collections.Generic;

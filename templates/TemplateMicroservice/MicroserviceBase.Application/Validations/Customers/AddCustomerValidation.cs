@@ -10,6 +10,7 @@ namespace MicroserviceBase.Application.Validations.Customers
         {
             Add("NomeEstaPreenchido", new Rule<CreateCustomerCommand>(new NomeEstaPreenchido(), "Preencher o campo nome"));
             Add("CustomerTemIdadeCompativel", new Rule<CreateCustomerCommand>(new CustomerTemIdadeCompativel(), "Cliente de possuir mais de 18 anos"));
+            Add("CpfDeveSerUnico", new Rule<CreateCustomerCommand>(new CpfDeveSerUnicoNaBase(), "CPF já cadastrado"));
         }
     }
 }
