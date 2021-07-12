@@ -26,7 +26,10 @@ namespace MicroserviceBase.Controllers.V1
         [HttpPatch("{id}")]
         public IActionResult Patch(Guid customerId, [FromBody] UpdateCustomerCommand command)
         {
-            var customer = new Customer("Nome", new DateTime(2010, 01, 01), "11111111111");
+            var customer = new Customer(command.Nome, command.DataNascimento, command.CPF);
+
+            if (customer.IsValid is false)
+                return BadRequest(customer);
 
             customer.Patch(command);
 

@@ -7,7 +7,7 @@ namespace MicroserviceBase.Infrastructure.Data.Queries
 {
     public class CustomerQuery : ICustomerQuery
     {
-        private readonly IList<Customer> customers = new List<Customer>();
+        private static readonly IList<Customer> customers = new List<Customer>();
         public Customer GetByCPF(string cpf)
         {
             return customers.Where(c => c.CPF == cpf).SingleOrDefault();
