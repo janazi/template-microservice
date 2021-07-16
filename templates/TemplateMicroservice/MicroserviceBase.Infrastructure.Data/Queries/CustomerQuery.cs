@@ -10,7 +10,8 @@ namespace MicroserviceBase.Infrastructure.Data.Queries
         private static readonly IList<Customer> customers = new List<Customer>();
         public Customer GetByCPF(string cpf)
         {
-            return customers.Where(c => c.CPF == cpf).SingleOrDefault();
+            return customers.Where(c => c.CPF == cpf)
+                .SingleOrDefault();
         }
     }
 }

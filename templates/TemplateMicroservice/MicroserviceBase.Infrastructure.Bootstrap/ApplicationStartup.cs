@@ -18,9 +18,9 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
 {
     public class ApplicationStartup
     {
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, string applicationName)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, string appName, string appVersion)
         {
-            ConfigureLogging(configuration, applicationName);
+            ConfigureLogging(configuration, appName, appVersion);
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
@@ -52,17 +52,18 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             //services.AddMetrics();
         }
 
-        private static void ConfigureLogging(IConfiguration configuration, string applicationName)
+        private static void ConfigureLogging(IConfiguration configuration, string appName, string appVersion)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
                 .Enrich.WithProperty("Environment", environment)
-                .Enrich.WithProperty("AppllicationName", applicationName)
+                .Enrich.WithProperty("AppName", appName)
+                .Enrich.WithProperty("AppVersion", appVersion)
                 .WriteTo.Debug()
                 .WriteTo.Console(outputTemplate: "{Timestamp:HH:mm:ss:ms} [{Level}] {Properties}: {NewLine}{Message}{NewLine}{Exception}{NewLine}")
-                .Enrich.WithCorrelationIdHeader("x-correlation-id")
+                .Enrich.WithCorrelationIdHeader()
                 //.WriteTo.Elasticsearch(ConfigureElasticSink(context.Configuration, context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")))
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
