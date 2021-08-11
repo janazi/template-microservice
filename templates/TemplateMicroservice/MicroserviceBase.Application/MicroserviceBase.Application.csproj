@@ -12,7 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MicroserviceBase.Domain\MicroserviceBase.Domain.csproj" />
     <ProjectReference Include="..\MicroserviceBase.Infrastructure\MicroserviceBase.Infrastructure.CrossCutting.csproj" />
-    <PackageReference Include="Flunt" Version="2.0.3" />
+    <PackageReference Include="Flunt" Version="2.0.4" />
   </ItemGroup>
 
 </Project>

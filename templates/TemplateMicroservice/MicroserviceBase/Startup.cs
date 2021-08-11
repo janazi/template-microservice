@@ -1,11 +1,9 @@
-using MediatR;
 using MicroserviceBase.Infrastructure.Bootstrap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace MicroserviceBase
 {
@@ -24,7 +22,7 @@ namespace MicroserviceBase
         public void ConfigureServices(IServiceCollection services)
         {
             ApplicationInfo.Configure(Configuration);
-            startup.ConfigureServices(services, Configuration, ApplicationInfo.GetServiceId());
+            startup.ConfigureServices(services, Configuration, ApplicationInfo.GetServiceName(), ApplicationInfo.GetVersion());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

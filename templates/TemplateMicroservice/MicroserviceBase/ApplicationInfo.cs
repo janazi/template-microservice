@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Reflection;
-using Microsoft.Extensions.Configuration;
 
 namespace MicroserviceBase
 {
     public static class ApplicationInfo
     {
-        private static string ServiceName;
-        private static string ServiceId;
+        private static string _serviceName;
+        private static string _serviceId;
+        private static string _version;
 
         public static void Configure(IConfiguration configuration)
         {
@@ -15,12 +16,13 @@ namespace MicroserviceBase
             if (msSettings is null)
                 throw new ArgumentException("Missing MicroserviceSettings configuration section");
 
-            var version = typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            ServiceName = msSettings["Name"];
-            ServiceId = $"{ServiceName}-{version}";
+            _version = typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            _serviceName = msSettings["Name"];
+            _serviceId = $"{_serviceName}-{_version}";
         }
 
-        public static string GetServiceName() => ServiceName;
-        public static string GetServiceId() => ServiceId;
+        public static string GetServiceName() => _serviceName;
+        public static string GetServiceId() => _serviceId;
+        public static string GetVersion() => _version;
     }
 }

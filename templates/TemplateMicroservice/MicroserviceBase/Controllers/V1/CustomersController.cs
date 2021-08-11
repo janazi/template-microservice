@@ -28,7 +28,10 @@ namespace MicroserviceBase.Controllers.V1
         [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
         public IActionResult Patch([FromBody] UpdateCustomerCommand command)
         {
-            var customer = new Customer("Nome", new DateTime(2010, 01, 01), "11111111111");
+            var customer = new Customer(command.Nome, command.DataNascimento, command.CPF);
+
+            if (customer.IsValid is false)
+                return BadRequest(customer);
 
             customer.Patch(command);
 
