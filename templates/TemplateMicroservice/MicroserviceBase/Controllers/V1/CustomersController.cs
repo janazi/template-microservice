@@ -26,7 +26,7 @@ namespace MicroserviceBase.Controllers.V1
         [HttpPatch("{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
-        public IActionResult Patch(Guid customerId, [FromBody] UpdateCustomerCommand command)
+        public IActionResult Patch([FromBody] UpdateCustomerCommand command)
         {
             var customer = new Customer("Nome", new DateTime(2010, 01, 01), "11111111111");
 
@@ -35,7 +35,7 @@ namespace MicroserviceBase.Controllers.V1
             if (customer.IsValid is false)
                 return NoContent();
 
-            return new AcceptedResult("Patch", customer);
+            return new AcceptedResult(nameof(Patch), customer);
         }
 
         [HttpPost]
