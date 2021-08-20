@@ -26,6 +26,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\MicroserviceBase.Application\MicroserviceBase.Application.csproj" />
+	  <ProjectReference Include="..\MicroserviceBase.Infrastructure\MicroserviceBase.Infrastructure.CrossCutting.csproj" />
 	</ItemGroup>
 
 </Project>

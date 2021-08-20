@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using MicroserviceBase.Domain.Commands.Customers;
 using MicroserviceBase.Domain.Entities;
+using MicroserviceBase.Infrastructure.CrossCutting.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace MicroserviceBase.Controllers.V1
@@ -14,7 +14,7 @@ namespace MicroserviceBase.Controllers.V1
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public class CustomersController : ControllerBase
+    public class CustomersController : ControllerBase, IWarmUpController
     {
         private readonly IMediator _mediator;
 
@@ -53,5 +53,10 @@ namespace MicroserviceBase.Controllers.V1
             return CreatedAtAction(nameof(Post), result);
         }
 
+        [HttpGet, Route("WarmUp")]
+        public IActionResult WarmUp()
+        {
+            return Ok("Warmed Up");
+        }
     }
 }

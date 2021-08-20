@@ -2,8 +2,10 @@
 using MicroserviceBase.Domain.Policies;
 using MicroserviceBase.Infrastructure.Bootstrap.Extensions;
 using MicroserviceBase.Infrastructure.CrossCutting;
+using MicroserviceBase.Infrastructure.CrossCutting.HealthChecks;
 using MicroserviceBase.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +27,11 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             {
                 options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                 options.JsonSerializerOptions.IgnoreNullValues = true;
-            });
+            }).AddControllersAsServices();
+
+            services.AddHealthChecks()
+                .AddCheck<WarmupHealthCheck>("Warmup Ready Check");
+
             services.ConfigureMasstransit();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -87,7 +93,13 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+            app.UseRouting().UseEndpoints(config =>
+            {
+                config.MapHealthChecks("/healthz", new HealthCheckOptions
+                {
+                    Predicate = _ => true
+                });
+            });
 
             app.UseAuthorization();
 

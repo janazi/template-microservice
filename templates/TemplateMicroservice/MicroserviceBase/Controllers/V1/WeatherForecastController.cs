@@ -2,6 +2,7 @@
 using MediatR;
 using MicroserviceBase.Domain.Commands.Customers;
 using MicroserviceBase.Domain.Events;
+using MicroserviceBase.Infrastructure.CrossCutting.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Net;
@@ -11,7 +12,7 @@ namespace MicroserviceBase.Controllers.V1
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : ControllerBase, IWarmUpController
     {
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly IPublishEndpoint _publishEndpoint;
@@ -37,6 +38,12 @@ namespace MicroserviceBase.Controllers.V1
             await _sendEndpoint.Send(new CreateCustomerCommand() { Nome = "sample command" });
             await _mediator.Send(new CreateCustomerCommand() { Nome = "mediator sample", CPF = "111.111.111-11", DataNascimento = new System.DateTime(2000, 1, 1) });
             return Ok();
+        }
+
+        [HttpGet, Route("WarmUp")]
+        public IActionResult WarmUp()
+        {
+            return Ok("Warmed Up");
         }
     }
 }
