@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MicroserviceBase.Domain.Policies;
+using MicroserviceBase.Domain.Services;
 using MicroserviceBase.Infrastructure.Bootstrap.Extensions;
 using MicroserviceBase.Infrastructure.CrossCutting;
 using MicroserviceBase.Infrastructure.CrossCutting.HealthChecks;
@@ -42,6 +43,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             services.AddCustomHealthChecks();
             services.AddSingleton<DatabasePolicies>();
             services.AddMediatR(AppDomain.CurrentDomain.Load("MicroserviceBase.Application"));
+            services.AddSingleton<ILazyService, LazyService>();
             //services.AddOpenTracing();
             //services.AddJaegerHttpTracer(configuration);
             //services.AddMassTransitOpenTracing();
