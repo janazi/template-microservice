@@ -6,13 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="DomainValidationCore" Version="1.1.1" />
-    <PackageReference Include="MassTransit" Version="7.2.1" />
+    <PackageReference Include="MassTransit" Version="7.2.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MicroserviceBase.Domain\MicroserviceBase.Domain.csproj" />
     <ProjectReference Include="..\MicroserviceBase.Infrastructure\MicroserviceBase.Infrastructure.CrossCutting.csproj" />
-    <PackageReference Include="Flunt" Version="2.0.4" />
+    <PackageReference Include="Flunt" Version="2.0.5" />
   </ItemGroup>
 
 </Project>
