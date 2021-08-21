@@ -12,7 +12,6 @@ using Microsoft.OpenApi.Models;
 using RequestHeaderCorrelationId;
 using Serilog;
 using System;
-using System.Collections.Generic;
 
 namespace MicroserviceBase.Infrastructure.Bootstrap
 {
@@ -28,6 +27,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             });
             services.ConfigureMasstransit();
             services.AddControllers();
+            services.AddHttpClient();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MicroserviceBase", Version = "v1" });
@@ -74,7 +74,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                foreach (var versionDescription in (IEnumerable<ApiVersionDescription>)provider.ApiVersionDescriptions)
+                foreach (var versionDescription in provider.ApiVersionDescriptions)
                 {
                     c.SwaggerEndpoint("./" + versionDescription.GroupName + "/swagger.json", versionDescription.GroupName.ToLowerInvariant());
                     c.OAuthClientId(string.Empty);

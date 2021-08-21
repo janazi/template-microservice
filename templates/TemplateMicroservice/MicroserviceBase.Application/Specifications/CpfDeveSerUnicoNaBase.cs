@@ -10,7 +10,7 @@ namespace MicroserviceBase.Application.Specifications
         public bool IsSatisfiedBy(CreateCustomerCommand c)
         {
             var customerQuery = DependencyResolver.GetService<ICustomerQuery>();
-            var existingCustomer = customerQuery.GetByCPF(c.CPF);
+            var existingCustomer = customerQuery.GetByCpf(c.CPF);
             return existingCustomer is null;
         }
     }
