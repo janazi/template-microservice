@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using RequestHeaderCorrelationId;
 using Serilog;
 using Serilog.Core.Enrichers;
@@ -26,6 +27,13 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration, string appName, string appVersion)
         {
             ConfigureLogging(configuration, appName, appVersion);
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
@@ -99,7 +107,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
                 opt.EnrichersForContextFactory = context => new[]
                 {
                     new PropertyEnricher(FROM_HEADER, context.Request.Headers[FROM_HEADER])
-                }; 
+                };
             });
 
             app.AddRequestHeaderCorrelationId();
