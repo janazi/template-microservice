@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using RequestHeaderCorrelationId;
 using Serilog;
+using Serilog.Core.Enrichers;
+using Serilog.Enrichers.AspNetCore.HttpContext;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +23,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
 {
     public class ApplicationStartup
     {
+        private const string FROM_HEADER = "from";
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration, string appName, string appVersion)
         {
             ConfigureLogging(configuration, appName, appVersion);
@@ -63,6 +66,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
         private static void ConfigureLogging(IConfiguration configuration, string appName, string appVersion)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
@@ -90,6 +94,13 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
                 }
             });
 
+            app.UseSerilogLogContext(opt =>
+            {
+                opt.EnrichersForContextFactory = context => new[]
+                {
+                    new PropertyEnricher(FROM_HEADER, context.Request.Headers[FROM_HEADER])
+                }; 
+            });
 
             app.AddRequestHeaderCorrelationId();
 

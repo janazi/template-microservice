@@ -9,6 +9,7 @@ namespace MicroserviceBase
         private static string _serviceName;
         private static string _serviceId;
         private static string _version;
+        private const string ApplicationNameEnvironment = "ApplicationName";
 
         public static void Configure(IConfiguration configuration)
         {
@@ -18,6 +19,7 @@ namespace MicroserviceBase
 
             _version = typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
             _serviceName = msSettings["Name"];
+            Environment.SetEnvironmentVariable(ApplicationNameEnvironment, _serviceName);
             _serviceId = $"{_serviceName}-{_version}";
         }
 
