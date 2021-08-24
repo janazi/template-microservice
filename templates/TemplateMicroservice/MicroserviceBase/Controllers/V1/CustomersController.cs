@@ -4,6 +4,7 @@ using MicroserviceBase.Domain.Entities;
 using MicroserviceBase.Infrastructure.CrossCutting.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace MicroserviceBase.Controllers.V1
@@ -17,10 +18,12 @@ namespace MicroserviceBase.Controllers.V1
     public class CustomersController : ControllerBase, IWarmUpController
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<CustomersController> _logger;
 
-        public CustomersController(IMediator mediator)
+        public CustomersController(IMediator mediator, ILogger<CustomersController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPatch("{id}")]
@@ -57,6 +60,7 @@ namespace MicroserviceBase.Controllers.V1
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult WarmUp()
         {
+            _logger.LogDebug("Warming up");
             return Ok("Warmed Up");
         }
     }

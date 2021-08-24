@@ -12,17 +12,28 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using RequestHeaderCorrelationId;
 using Serilog;
+using Serilog.Core.Enrichers;
+using Serilog.Enrichers.AspNetCore.HttpContext;
 using System;
 
 namespace MicroserviceBase.Infrastructure.Bootstrap
 {
     public class ApplicationStartup
     {
+        private const string FROM_HEADER = "from";
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration, string appName, string appVersion)
         {
             ConfigureLogging(configuration, appName, appVersion);
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
@@ -63,6 +74,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
         private static void ConfigureLogging(IConfiguration configuration, string appName, string appVersion)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
@@ -90,6 +102,13 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
                 }
             });
 
+            app.UseSerilogLogContext(opt =>
+            {
+                opt.EnrichersForContextFactory = context => new[]
+                {
+                    new PropertyEnricher(FROM_HEADER, context.Request.Headers[FROM_HEADER])
+                };
+            });
 
             app.AddRequestHeaderCorrelationId();
 
