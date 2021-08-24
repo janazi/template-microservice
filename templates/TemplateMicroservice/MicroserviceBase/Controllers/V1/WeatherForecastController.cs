@@ -13,7 +13,7 @@ namespace MicroserviceBase.Controllers.V1
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase, IWarmUpController
     {
         private readonly ILogger<WeatherForecastController> _logger;
@@ -46,6 +46,7 @@ namespace MicroserviceBase.Controllers.V1
         }
 
         [HttpGet, Route("WarmUp")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult WarmUp()
         {
             return Ok("Warmed Up");

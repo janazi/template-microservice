@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MicroserviceBase.Controllers.V1
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -54,6 +54,7 @@ namespace MicroserviceBase.Controllers.V1
         }
 
         [HttpGet, Route("WarmUp")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult WarmUp()
         {
             return Ok("Warmed Up");
