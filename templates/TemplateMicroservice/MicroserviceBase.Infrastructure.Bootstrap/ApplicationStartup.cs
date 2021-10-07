@@ -84,6 +84,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
                 .WriteTo.Debug()
                 .WriteTo.Console(outputTemplate: "{Timestamp:HH:mm:ss:ms} [{Level}] {Properties}: {NewLine}{Message}{NewLine}{Exception}{NewLine}")
                 .Enrich.WithCorrelationIdHeader()
+                //.Enrich.WithClientAgent()
                 //.WriteTo.Elasticsearch(ConfigureElasticSink(context.Configuration, context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")))
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();

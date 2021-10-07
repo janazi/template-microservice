@@ -17,7 +17,8 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
 		<PackageReference Include="RequestHeaderCorrelationIdMiddleware" Version="1.0.5" />
 		<PackageReference Include="Serilog.Enrichers.AspNetCore.HttpContext" Version="1.0.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+		<PackageReference Include="Serilog.Enrichers.ClientInfo" Version="1.1.4" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>

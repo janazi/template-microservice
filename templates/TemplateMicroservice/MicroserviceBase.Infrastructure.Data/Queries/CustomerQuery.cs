@@ -2,16 +2,16 @@
 using MicroserviceBase.Domain.Queries;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MicroserviceBase.Infrastructure.Data.Queries
 {
     public class CustomerQuery : ICustomerQuery
     {
-        private static readonly IList<Customer> customers = new List<Customer>();
-        public Customer GetByCPF(string cpf)
+        private static readonly List<Customer> customers = new();
+        public Task<Customer> GetByCpf(string cpf)
         {
-            return customers.Where(c => c.CPF == cpf)
-                .SingleOrDefault();
+            return Task.FromResult(customers.Where(c => c.CPF == cpf).SingleOrDefault());
         }
     }
 }

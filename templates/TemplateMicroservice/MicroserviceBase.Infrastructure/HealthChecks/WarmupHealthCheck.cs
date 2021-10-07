@@ -23,11 +23,8 @@ namespace MicroserviceBase.Infrastructure.CrossCutting.HealthChecks
                 return Task.FromResult(HealthCheckResult.Healthy());
 
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Contains(AppDomain.CurrentDomain.FriendlyName)))
-                assembly.GetTypes().Where(myType => myType.GetInterfaces().Contains(typeof(IWarmUpController))).ToList().ForEach(t =>
-                {
-                    var controller = (IWarmUpController)serviceProvider.GetRequiredService(t);
-                    controller.WarmUp();
-                });
+                assembly.GetTypes().Where(t => t.FullName.Contains("Controller")).ToList()
+                    .ForEach(t => _ = serviceProvider.GetRequiredService(t));
 
             IsWarmedUp = true;
 

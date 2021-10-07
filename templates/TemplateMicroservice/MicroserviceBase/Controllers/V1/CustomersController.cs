@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using MicroserviceBase.Domain.Commands.Customers;
 using MicroserviceBase.Domain.Entities;
-using MicroserviceBase.Infrastructure.CrossCutting.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,7 +14,7 @@ namespace MicroserviceBase.Controllers.V1
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public class CustomersController : ControllerBase, IWarmUpController
+    public class CustomersController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly ILogger<CustomersController> _logger;
@@ -54,14 +53,6 @@ namespace MicroserviceBase.Controllers.V1
                 return BadRequest(result.Notifications);
 
             return CreatedAtAction(nameof(Post), result);
-        }
-
-        [HttpGet, Route("WarmUp")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult WarmUp()
-        {
-            _logger.LogDebug("Warming up");
-            return Ok("Warmed Up");
         }
     }
 }
