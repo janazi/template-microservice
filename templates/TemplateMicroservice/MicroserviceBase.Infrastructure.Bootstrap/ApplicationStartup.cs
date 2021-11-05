@@ -71,7 +71,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             //services.AddMetrics();
         }
 
-        private static void ConfigureLogging(IConfiguration configuration, string appName, string appVersion)
+        private void ConfigureLogging(IConfiguration configuration, string appName, string appVersion)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
