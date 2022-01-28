@@ -69,6 +69,8 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
 
             services.AddCustomResponseCompression();
             //services.AddMetrics();
+
+            DependencyResolver.SetServiceCollection(services);
         }
 
         private void ConfigureLogging(IConfiguration configuration, string appName, string appVersion)
@@ -128,7 +130,7 @@ namespace MicroserviceBase.Infrastructure.Bootstrap
             app.UseEndpoints(ep => ep.MapControllers());
             app.UseResponseCompression();
 
-            DependencyResolver.SetServiceCollection(app.ApplicationServices);
+            DependencyResolver.SetServiceProvider(app.ApplicationServices);
         }
     }
 }

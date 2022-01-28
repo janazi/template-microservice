@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,6 +10,7 @@ namespace MicroserviceBase.Infrastructure.CrossCutting.HealthChecks
     public class WarmupHealthCheck : IHealthCheck
     {
         private readonly IServiceProvider serviceProvider;
+
         private static bool IsWarmedUp { get; set; }
 
         public WarmupHealthCheck(IServiceProvider serviceProvider)
@@ -19,12 +19,32 @@ namespace MicroserviceBase.Infrastructure.CrossCutting.HealthChecks
         }
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
+            return Task.FromResult(HealthCheckResult.Healthy());
             if (IsWarmedUp is true)
                 return Task.FromResult(HealthCheckResult.Healthy());
 
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Contains(AppDomain.CurrentDomain.FriendlyName)))
+            foreach (var service in DependencyResolver.Services)
+            {
+                try
+                {
+                    var s = serviceProvider.GetService(service.ServiceType);
+                }
+                catch { }
+            }
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Contains(AppDomain.CurrentDomain.FriendlyName));
+            foreach (var assembly in assemblies)
+            {
                 assembly.GetTypes().Where(t => t.FullName.Contains("Controller")).ToList()
-                    .ForEach(t => _ = serviceProvider.GetRequiredService(t));
+                    .ForEach(t =>
+                    {
+                        try
+                        {
+                            _ = serviceProvider.GetRequiredService(t);
+                        }
+                        catch { }
+                    });
+            }
 
             IsWarmedUp = true;
 

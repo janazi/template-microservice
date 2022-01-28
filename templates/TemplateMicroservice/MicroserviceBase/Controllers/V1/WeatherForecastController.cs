@@ -2,7 +2,6 @@
 using MediatR;
 using MicroserviceBase.Domain.Commands.Customers;
 using MicroserviceBase.Domain.Events;
-using MicroserviceBase.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Net;
@@ -12,7 +11,6 @@ namespace MicroserviceBase.Controllers.V1
 {
 
     [ApiController]
-
     [Route("api/[controller]")]
     public class WeatherForecastController : BaseController
     {
@@ -20,16 +18,14 @@ namespace MicroserviceBase.Controllers.V1
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ISendEndpointProvider _sendEndpoint;
         private readonly IMediator _mediator;
-        private readonly ILazyService _lazyService;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger, IPublishEndpoint publishEndpoint
-            , ISendEndpointProvider sendEndpointProvider, IMediator mediator, ILazyService lazyService)
+            , ISendEndpointProvider sendEndpointProvider, IMediator mediator)
         {
             _logger = logger;
             _publishEndpoint = publishEndpoint;
             _sendEndpoint = sendEndpointProvider;
             _mediator = mediator;
-            _lazyService = lazyService;
         }
 
         [HttpGet]
@@ -37,7 +33,7 @@ namespace MicroserviceBase.Controllers.V1
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetAsync()
         {
-            _lazyService.LazyStartupService();
+            //_lazyService.LazyStartupService();
             _logger.LogInformation(Request.Headers["x-correlation-id"]);
             await _publishEndpoint.Publish(new CustomerCreatedEvent() { Description = "sample event" });
             await _sendEndpoint.Send(new CreateCustomerCommand() { Nome = "sample command" });
